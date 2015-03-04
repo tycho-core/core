@@ -1,0 +1,40 @@
+//////////////////////////////////////////////////////////////////////////////
+// Tycho Game Library
+// Copyright (C) 2008 Martin Slater
+// Created : Tuesday, 27 May 2008 10:20:13 PM
+//////////////////////////////////////////////////////////////////////////////
+#if _MSC_VER > 1000
+#pragma once
+#endif  // _MSC_VER
+
+#ifndef __WINDOWS_COMMON_H_0E4C19D4_B2EF_46B5_85B8_F921D06CA932_
+#define __WINDOWS_COMMON_H_0E4C19D4_B2EF_46B5_85B8_F921D06CA932_
+
+//////////////////////////////////////////////////////////////////////////////
+// INCLUDES
+//////////////////////////////////////////////////////////////////////////////
+#include "core/core_abi.h"
+
+//////////////////////////////////////////////////////////////////////////////
+// Windows headers
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef STRICT
+#define STRICT
+#endif // STRICT
+#define NOMINMAX
+#define WINDOWS_LEAN_AND_MEAN
+#include <windows.h>
+#include <windowsx.h>
+#include <commctrl.h>
+#include <commdlg.h>
+#include <shellapi.h> 
+#include <time.h>
+#include <ShlObj.h>
+
+// enable std conformance
+#ifndef __clang__
+#pragma conform(forScope, on)
+#endif
+
+#endif // __WINDOWS_COMMON_H_0E4C19D4_B2EF_46B5_85B8_F921D06CA932_

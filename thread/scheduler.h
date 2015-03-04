@@ -1,0 +1,42 @@
+//////////////////////////////////////////////////////////////////////////////
+// Tycho Game Library
+// Copyright (C) 2008 Martin Slater
+// Created : Wednesday, 8 October 2008 11:02:14 PM
+//////////////////////////////////////////////////////////////////////////////
+#if _MSC_VER > 1000
+#pragma once
+#endif  // _MSC_VER
+
+#ifndef __SCHEDULER_H_BE794B59_766C_4027_BDBF_E347FD3006AC_
+#define __SCHEDULER_H_BE794B59_766C_4027_BDBF_E347FD3006AC_
+
+//////////////////////////////////////////////////////////////////////////////
+// INCLUDES
+//////////////////////////////////////////////////////////////////////////////
+#include "core/core_abi.h"
+#include "core/thread/task.h"
+#include <queue>
+
+//////////////////////////////////////////////////////////////////////////////
+// CLASS
+//////////////////////////////////////////////////////////////////////////////
+
+namespace tycho
+{
+namespace core
+{
+
+    class CORE_ABI scheduler
+    {
+    public:
+		/// create a new task
+		task* create_task(task::run_function_t f);
+
+    private:
+		std::queue<task*> m_task_queue;
+    };
+
+} // end namespace
+} // end namespace
+
+#endif // __SCHEDULER_H_BE794B59_766C_4027_BDBF_E347FD3006AC_

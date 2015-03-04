@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Core Library</Name>
+  <Header>namespace tycho
+{
+namespace core
+{
+
+    $(ClassDef)
+
+} // end namespace
+} // end namespace</Header>
+  <Source>namespace tycho
+{
+namespace core
+{
+
+    //--------------------------------------------------------------------
+
+
+
+    //--------------------------------------------------------------------
+
+
+} // end namespace
+} // end namespace</Source>
+  <TestCase />
+  <SrcDir>./</SrcDir>
+  <IncDir>./</IncDir>
+  <TestsDir>tests</TestsDir>
+  <HdrIncludes>#include "core/core_abi.h"</HdrIncludes>
+  <SrcIncludes />
+  <ABI>CORE_ABI</ABI>
+</ProjectSettings>
