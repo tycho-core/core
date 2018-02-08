@@ -26,8 +26,6 @@
 #include "test/global_test_fixture.h"
 #include <vector>
 
-using namespace tycho;
-using namespace tycho::core;
 using namespace tycho::test;
 namespace tc = tycho::core; 
 
@@ -110,7 +108,7 @@ BOOST_AUTO_TEST_CASE(test_program_options)
  	BOOST_CHECK(c == false);
  	BOOST_CHECK(foso == true);
  	BOOST_CHECK(d);
- 	BOOST_CHECK(d && core::strcmp(d, "hello") == 0);
+ 	BOOST_CHECK(d && tc::strcmp(d, "hello") == 0);
  	BOOST_CHECK(f32 == 256.128f);
 }
 
@@ -141,6 +139,7 @@ BOOST_AUTO_TEST_CASE(test_perfect_hash)
 
 BOOST_AUTO_TEST_CASE(test_allocator_2d)
 {
+	using namespace tycho::core;
 	allocator_2d alloc(512, 512);
 	allocator_2d::tag* a0 = alloc.allocate(128, 256);
 	BOOST_CHECK(a0);
@@ -197,6 +196,7 @@ BOOST_AUTO_TEST_CASE(test_dl_allocator)
 	//=====================================================
 	// Doug Lea Allocator Tests
 	//=====================================================
+	using namespace tycho::core;
 
 	dl_allocation_summary pre_summary, post_summary = {0};
 
@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_CASE(test_dl_allocator)
 	post_summary = dlalloc.get_alloction_summary();
 	BOOST_CHECK((post_summary.allocated - pre_summary.allocated) >= szsmall);
 
-	int sz = dlalloc.get_allocation_size(small);
+	size_t sz = dlalloc.get_allocation_size(small);
 
 	// free
 	dlalloc.free(small);
@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE(test_dl_allocator)
 	// test overrun - this will assert if asserts enabled
 	static int szoverrun = 20;
 	void* overrun = dlalloc.malloc(szoverrun);
-	int realszoverrun = dlalloc.get_allocation_size(overrun);
+	size_t realszoverrun = dlalloc.get_allocation_size(overrun);
 	uint8* ptr = reinterpret_cast<uint8*>(overrun);
 	for (int i = 0; i <= realszoverrun; ++i)
 	{
@@ -257,6 +257,7 @@ BOOST_AUTO_TEST_CASE(test_debug_allocator)
 	//=====================================================
 	// Debug Allocator Tests
 	//=====================================================
+	using namespace tycho::core;
 
 	// check alignment working with debug allocator
 	void* debugaligned = allocator::malloc_aligned(33, 32);
