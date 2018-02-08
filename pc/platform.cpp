@@ -11,7 +11,7 @@
 #include "core/string.h"
 #include "core/memory.h"
 #include "core/pc/safe_windows.h"
-#include "boost/format.hpp"
+#include "core/string_builder.h"
 
 //////////////////////////////////////////////////////////////////////////////
 // CLASS
@@ -242,7 +242,10 @@ namespace core
 
 		if(buffer) 
 		{
-			std::string result = (boost::format("%d : %s") % last_error % buffer).str();
+			char str_buffer[1024];
+			string_builder builder(str_buffer, ARRAYSIZE(str_buffer));
+			builder.append("%s : %s", last_error, buffer);
+			std::string result = builder.string();
 			::LocalFree(buffer);			
 			return result;
 		}

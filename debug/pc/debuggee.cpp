@@ -10,7 +10,10 @@
 #include "debuggee.h"
 #include "core/debug/assert.h"
 #include "core/debug/utilities.h"
+
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <WinSock2.h>
+
 
 #pragma comment(lib,"Ws2_32.lib")
 
