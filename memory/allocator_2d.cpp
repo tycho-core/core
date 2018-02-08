@@ -168,13 +168,14 @@ namespace core
 		best_vspan->height -= height;
 		if(best_vspan->height == 0)
 			m_whitespace.erase(best_vit);
-		else
+		else {
 			best_vspan->start += height;
-			
-		TYCHO_ASSERT(best_vspan->start >= 0);
-		TYCHO_ASSERT(best_vspan->end <= m_height);
-		TYCHO_ASSERT(best_vspan->height <= m_height);
-		TYCHO_ASSERT(best_vspan->height >= 0);
+
+			TYCHO_ASSERT(best_vspan->start >= 0);
+			TYCHO_ASSERT(best_vspan->end <= m_height);
+			TYCHO_ASSERT(best_vspan->height <= m_height);
+			TYCHO_ASSERT(best_vspan->height >= 0);
+		}
 		
 		tag* t = allocate(width, height);						
 		
