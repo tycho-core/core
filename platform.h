@@ -37,8 +37,8 @@ namespace core
 	{
 		void*	base_address;
 		void*	allocation_base;
-		uint32	state;
-		uint32  region_size;
+		uint64	state;
+		uint64  region_size;
 	};
 
 	/// memory allocation

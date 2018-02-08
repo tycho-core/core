@@ -10,6 +10,8 @@
 #include "debugger.h"
 #include "core/debug/assert.h"
 #include "core/debug/utilities.h"
+
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <WinSock2.h>
 #include <Ws2tcpip.h>
 
@@ -136,13 +138,7 @@ namespace pc
 
 	bool debugger::send(const char* data)
 	{
-		int ret = ::send(m_socket, data, strlen(data), 0);
-		if(ret == SOCKET_ERROR)
-		{
-			return false;
-		}
-
-		return true;
+		return ::send(m_socket, data, static_cast<int>(strlen(data)), 0) != SOCKET_ERROR;
 	}
 
 	//------------------------------------------------------------------------------------

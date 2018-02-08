@@ -48,10 +48,15 @@
 #pragma auto_inline(off)
 static DWORD_PTR get_program_counter()
 {
+//TODO: FIXME
+#ifdef _WIN64
+	return 0;
+#else
 	DWORD_PTR pc;
 	__asm mov AXREG, [BPREG + SIZEOFPTR] // Get the return address out of the current stack frame
 	__asm mov [pc], AXREG				 // Put the return address into the variable we'll return
 	return pc;
+#endif
 }
 #pragma auto_inline(on)
 
@@ -81,6 +86,12 @@ namespace debug
 	
 	//------------------------------------------------------------------------------------
 
+#if _WIN64
+	CORE_ABI int stacktrace(core::ptr_type *trace, size_t max_depth)
+	{
+		return 0;
+	}
+#else
 	/// generate a stack trace
 	/// \warning For this function to work correctly with optimisations enabled you need to disable the 
 	///          framer pointer omission optimisation using /Oy-
@@ -126,6 +137,7 @@ namespace debug
 		
 		return index;
 	}
+#endif // _WIN64
 
 	//------------------------------------------------------------------------------------
 

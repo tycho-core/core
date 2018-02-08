@@ -69,7 +69,7 @@ void     refree(struct reroot *r);
 
 /* get a new (cleared) item from the root */
 #define renew(r) ((r)->numleft ? \
-   (((char *)((r)->list+1))+((r)->numleft-=(r)->size)) : renewx(r))
+   (((char *)((r)->list+1))+((r)->numleft-= (word)((r)->size))) : renewx(r))
 
 char    *renewx(struct reroot *r);
 

@@ -52,7 +52,7 @@ namespace core
 	    size_t rc = 0;
  	    while(s[rc])
  	        ++rc;
- 	    return rc;
+ 	    return static_cast<int>(rc);
 	}
 	
 	//------------------------------------------------------------------------------------

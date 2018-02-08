@@ -54,10 +54,10 @@ namespace pc
 		static const int m_port = 3000;
 
 		/// socket for listening for client connections
-		unsigned int m_listening_socket;
+		core::uint64 m_listening_socket;
 
 		/// socket for connected clients
-		unsigned int m_client_socket;
+		core::uint64 m_client_socket;
 
 		bool m_connected;
 

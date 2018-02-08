@@ -112,7 +112,7 @@ namespace registry
 		/// REG_SZ - wide character
 		bool reg_set_value(HKEY key, const std::wstring &name, const std::wstring &value)
 		{
-			LONG result = ::RegSetValueExW(key, name.c_str(), 0, REG_SZ, (LPBYTE)&value[0], value.length()*2+2);
+			LONG result = ::RegSetValueExW(key, name.c_str(), 0, REG_SZ, (LPBYTE)&value[0], static_cast<DWORD>(value.length()*2+2));
 			if(result != ERROR_SUCCESS)
 				return false;
 			return true;

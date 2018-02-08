@@ -44,7 +44,7 @@ namespace pc
 
 	private:
 		/// the connection socket
-		unsigned int m_socket;
+		core::uint64 m_socket;
 	};
 
 } // end namespace

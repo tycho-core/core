@@ -184,7 +184,7 @@ namespace pc
 
 	bool debuggee::send(const char* data)
 	{
-		int ret = ::send(m_client_socket, data, strlen(data), 0);
+		size_t ret = ::send(m_client_socket, data, static_cast<int>(strlen(data)), 0);
 		if(ret == SOCKET_ERROR)
 		{
 			return false;

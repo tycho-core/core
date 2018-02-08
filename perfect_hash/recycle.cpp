@@ -75,12 +75,12 @@ char  *renewx(struct reroot *r)
    }
    else
    {  /* allocate a new block of nodes */
-      r->numleft = r->size*((ub4)1<<r->logsize);
+      r->numleft = (word)(r->size * (1ULL << r->logsize));
       if (r->numleft < REMAX) ++r->logsize;
       temp = (recycle *)remalloc(sizeof(recycle) + r->numleft);
       temp->next = r->list;
       r->list = temp;
-      r->numleft-=r->size;
+      r->numleft-=(word)r->size;
       temp = (recycle *)((char *)(r->list+1)+r->numleft);
    }
    return (char *)temp;
