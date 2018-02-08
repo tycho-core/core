@@ -64,13 +64,13 @@ namespace core
 
 
 #if TYCHO_PC
-	int register_atexit_handler()
+	int64 register_atexit_handler()
 	{
 		atexit(atexit_handler);
-		return (int)&atexit_handler;
+		return reinterpret_cast<int64>(&atexit_handler);
 	}
 
-	static int foo = register_atexit_handler();
+	static int64 foo = register_atexit_handler();
 #elif TYCHO_LINUX
 	struct sentinal
 	{
@@ -87,7 +87,7 @@ namespace core
 	
 	//------------------------------------------------------------------------------------
 	
-	void* allocator::malloc(core::uint32 size, int flags)
+	void* allocator::malloc(size_t size, int flags)
 	{
 		initialise();
 		if(g_alloc.debugger)
@@ -98,7 +98,7 @@ namespace core
 	
 	//------------------------------------------------------------------------------------
 
-	void* allocator::malloc_aligned(core::uint32 size, core::uint32 alignment, int flags) 
+	void* allocator::malloc_aligned(size_t size, size_t alignment, int flags)
 	{
 		initialise();
 		if(g_alloc.debugger)

@@ -43,11 +43,11 @@ namespace core
 		
     public:
 		/// allocate a new region of memory.
-		static void*  malloc(core::uint32, int flags = f_none);
+		static void*  malloc(size_t, int flags = f_none);
 		
 		/// allocated a new region of aligned memory.
 		/// \warning It is not valid to realloc an aligned memory region
-		static void*  malloc_aligned(core::uint32 size, core::uint32 alignment, int flags = f_none);
+		static void*  malloc_aligned(size_t size, size_t alignment, int flags = f_none);
 		
 		/// realloc memory block. It will resize the existing block if possible or allocate a new block,
 		/// copy the old contents to it and release the existing block.
@@ -57,7 +57,7 @@ namespace core
 		/// free a previous allocation
 		static void   free(void* memory, int flags = f_none);
 		
-		/// \returns the size that was allocated for the passeed pointer
+		/// \returns the size that was allocated for the passed pointer
 		static size_t get_allocation_size(void* memory);
 		
 		/// set the allocator to use

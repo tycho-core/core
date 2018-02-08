@@ -128,7 +128,7 @@ namespace core
 	private:		
 		/// \returns the space remaining in the string buffer
 		int buffer_space_remaining()
-		 { return StringBufferSize - (m_strings_tail - m_strings); }
+		 { return static_cast<int>(StringBufferSize - (m_strings_tail - m_strings)); }
 		 
 		 /// add a string to the string buffer
 		const char* add_string(const char *);

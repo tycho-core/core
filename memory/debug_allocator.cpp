@@ -236,7 +236,7 @@ namespace core
 	
 	//------------------------------------------------------------------------------------
 	
-	void debug_allocator::add_debug_info(allocation_info& info, int fill_offset, int fill_size, size_t real_size)
+	void debug_allocator::add_debug_info(allocation_info& info, size_t fill_offset, size_t fill_size, size_t real_size)
 	{
 		//if((m_mem_stats.get_peak()+real_size) > 1024 * 1024)
 		//{
@@ -323,8 +323,8 @@ namespace core
 		char buf[BufLen];
 		di_hash_table::const_iterator it = m_debug_info.begin();
 		di_hash_table::const_iterator end = m_debug_info.end();
-		int num_leaks = 0;
-		int num_bytes = 0;
+		size_t num_leaks = 0;
+		size_t num_bytes = 0;
 		for(; it != end; ++it)
 		{
 			const debug_info &info = it->second;

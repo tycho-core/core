@@ -88,14 +88,14 @@ namespace core
 		public:
 			stats() : m_peak(0), m_used(0) {}
 			
-			void inc(int amount) { m_used += amount; if(m_used > m_peak) m_peak = m_used; }
-			void dec(int amount) { m_used -= amount; TYCHO_ASSERT(m_used >= 0); }
-			int get_used() const { return m_used; }
-			int get_peak() const { return m_peak; }
+			void inc(size_t amount) { m_used += amount; if(m_used > m_peak) m_peak = m_used; }
+			void dec(size_t amount) { m_used -= amount; TYCHO_ASSERT(m_used >= 0); }
+			size_t get_used() const { return m_used; }
+			size_t get_peak() const { return m_peak; }
 		
 		private:
-			int m_peak; ///< peak amount of memory allocated 
-			int m_used; ///< current amount of memory allocated
+			size_t m_peak; ///< peak amount of memory allocated 
+			size_t m_used; ///< current amount of memory allocated
 		};
 		
 		int m_features;				///< features currently enabled
@@ -183,7 +183,7 @@ namespace core
 		void make_allocation_info(allocation_info& info, void* real_ptr, size_t real_size, size_t user_size, size_t padding, int flags);
 		
 		/// Add a debug entry if needed for the allocation
-		void add_debug_info(allocation_info& info, int fill_offset, int fill_size, size_t real_size);
+		void add_debug_info(allocation_info& info, size_t fill_offset, size_t fill_size, size_t real_size);
 		
 		/// Remove debug info for this allocation and update memory stats.
 		void free_debug_info(allocation_info& info, allocator_layer* next_layer);
