@@ -52,7 +52,7 @@ namespace core
 
 	//------------------------------------------------------------------------------------
 
-	void doassert(const char *expr_txt, const char* msg_txt, const char *file, unsigned line)
+	void default_assert(const char *expr_txt, const char* msg_txt, const char *file, unsigned line)
 	{
 		initialise_assert();
 		
