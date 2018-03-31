@@ -81,7 +81,7 @@ typedef tc::program_config tcp;
 		
 BOOST_AUTO_TEST_CASE(test_program_options)
 {
-	const char* cmd_line = "program_name --test.foo=12 -c=0 --foso -d=hello --f32=256.128";
+	const char* cmd_line = "program_name --test.foo=12 -c=0 --test.foso=1 -d=hello --test.f32=256.128";
 	tc::program_config pc;
 	pc.parse_command_line(cmd_line);
 	int foo = 0;
