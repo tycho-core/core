@@ -71,7 +71,7 @@ namespace core
 		if(!options::log_only)
 		{
 		    ::printf("%s", msg_buffer);
-		    asm ("int $3") ;
+		    __builtin_trap();
 		    ::abort();
 		}
 	}

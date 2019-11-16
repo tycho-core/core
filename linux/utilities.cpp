@@ -10,10 +10,7 @@
 #include "core/console.h"
 #include <string>
 #include <stdlib.h>
-
-#if TYCHO_OSX
 #include <unistd.h>
-#endif
 
 //////////////////////////////////////////////////////////////////////////////
 // CLASS

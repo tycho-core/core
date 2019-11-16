@@ -10,7 +10,7 @@
 #include "core/memory/ansi_allocator.h"
 #include "core/debug/assert.h"
 #include <stdlib.h>
-
+#include <malloc.h>
 
 //////////////////////////////////////////////////////////////////////////////
 // CLASS
@@ -32,14 +32,16 @@ namespace core
 	void* ansi_allocator::malloc_aligned(size_t size, size_t alignment, int flags, allocator_layer *)
 	{
 		if (alignment == 0)
+		{
 			return malloc(size, flags, 0);
-#if !TYCHO_OSX //OSXTODO
-		else			
-		    return memalign(alignment, size);
-#else
+		}
+		else {	
+			void* ptr;
+			posix_memalign(&ptr, alignment, size);
+			return ptr;
+		}
         TYCHO_NOT_IMPLEMENTED;
         return 0;
-#endif
 	}
 	
 	//------------------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 #include "core/globals.h"
 #include "core/program_config.h"
 #include "core/process.h"
-#include "io/interface.h"
 
 #if TYCHO_PC
 // force initialisation early in startup so we can set our atexit handler 
