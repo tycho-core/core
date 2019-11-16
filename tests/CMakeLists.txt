@@ -1,3 +1,4 @@
 cmake_minimum_required (VERSION 2.8)
 
-tycho_add_test(core "" "core")
+tycho_add_test(core "" "tycore")
+add_dependencies(core_tests tycore)

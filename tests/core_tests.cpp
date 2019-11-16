@@ -7,6 +7,8 @@
 //////////////////////////////////////////////////////////////////////////////
 // INCLUDES
 //////////////////////////////////////////////////////////////////////////////
+#define CATCH_CONFIG_MAIN 
+#include "test/catch.hpp"
 #include "core/memory/new.h"
 #include "core/debug/assert.h"
 #include "core/memory/dl_allocator.h"
@@ -19,9 +21,6 @@
 #include "core/program_config.h"
 #include "core/globals.h"
 #include "core/string.h"
-#include "io/types.h"
-#include "io/file_stream.h"
-#include "io/interface.h"
 #include "core/core.h"
 #include "test/global_test_fixture.h"
 #include <vector>
@@ -30,25 +29,17 @@ using namespace tycho::test;
 namespace tc = tycho::core; 
 
 //////////////////////////////////////////////////////////////////////////////
-// TEST SETUP
-//////////////////////////////////////////////////////////////////////////////
-#define BOOST_TEST_MODULE image
-#include "boost/test/unit_test.hpp"
-
-BOOST_GLOBAL_FIXTURE(global_test_fixture);
-
-//////////////////////////////////////////////////////////////////////////////
 // TEST CASES
 //////////////////////////////////////////////////////////////////////////////
 
-BOOST_AUTO_TEST_CASE(test_lists)
+TEST_CASE("Basic list functionality", "")
 {
 	typedef tycho::core::list<int> list;
 	list l;
-	BOOST_CHECK(l.size() == 0);
+	REQUIRE(l.size() == 0);
 	for(int i = 0; i < 5; ++i)
 		l.push_back(i);
-	BOOST_CHECK(l.size() == 5);	
+	REQUIRE(l.size() == 5);	
 	int count = 0;
 	list::iterator it = l.begin();	
 	while(it != l.end())	
@@ -56,30 +47,30 @@ BOOST_AUTO_TEST_CASE(test_lists)
 		++count;
 		++it;
 	}
-	BOOST_CHECK(count == 5);
+	REQUIRE(count == 5);
 	
 	it = l.begin();
 	count = 0;
 	while(it != l.end())
 	{
-		BOOST_CHECK(count == *it);
+		REQUIRE(count == *it);
 		++count;
 		++it;
 	}
 	
 	l.erase(l.begin());	
-	BOOST_CHECK(l.size() == 4);
+	REQUIRE(l.size() == 4);
 	count = 0;
 	it = l.begin();
 	while(it != l.end())	
 		++count, ++it;
-	BOOST_CHECK(count == 4);
+	REQUIRE(count == 4);
 }
 
 typedef tc::program_config tcp;
 	
 		
-BOOST_AUTO_TEST_CASE(test_program_options)
+TEST_CASE("test_program_options", "")
 {
 	const char* cmd_line = "program_name --test.foo=12 -c=0 --test.foso=1 -d=hello --test.f32=256.128";
 	tc::program_config pc;
@@ -104,65 +95,39 @@ BOOST_AUTO_TEST_CASE(test_program_options)
 		};
 
 	pc.process_option_group("test", "arse", opts);
-	BOOST_CHECK(foo == 12);
- 	BOOST_CHECK(c == false);
- 	BOOST_CHECK(foso == true);
- 	BOOST_CHECK(d);
- 	BOOST_CHECK(d && tc::strcmp(d, "hello") == 0);
- 	BOOST_CHECK(f32 == 256.128f);
+	REQUIRE(foo == 12);
+ 	REQUIRE(c == false);
+ 	REQUIRE(foso == true);
+ 	REQUIRE(d);
+ 	REQUIRE(tc::strcmp(d, "hello"));
+ 	REQUIRE(f32 == 256.128f);
 }
 
 
 //TODO: Broken test
-/*
-BOOST_AUTO_TEST_CASE(test_perfect_hash)
-{
-	std::vector<const char*> strings;
-	strings.push_back("world");
-	strings.push_back("clr");
-	strings.push_back("mesh");
-	strings.push_back("float1");
-	strings.push_back("float2");
-	strings.push_back("float3");
-	
-	tc::perfect_hash::hash_function *func = tc::perfect_hash::create_function(strings, tc::perfect_hash::cf_minimal);
-	if(func)
-	{
-// 		int a = tc::perfect_hash::lookup(*func, "world", 5);
-// 		int c = tc::perfect_hash::lookup(*func, "clr", 3);
-// 		int d = tc::perfect_hash::lookup(*func, "mesh", 4);
-// 		int e = tc::perfect_hash::lookup(*func, "float1", 6);
-// 		int f = tc::perfect_hash::lookup(*func, "float2", 6);
-// 		int g = tc::perfect_hash::lookup(*func, "float3", 6);
-// 		int h = tc::perfect_hash::lookup(*func, "foo", 3);
-		tc::allocator::free(func);
-	}
-}
-*/
-
-BOOST_AUTO_TEST_CASE(test_allocator_2d)
+TEST_CASE("test_allocator_2d", "")
 {
 	using namespace tycho::core;
 	allocator_2d alloc(512, 512);
 	allocator_2d::tag* a0 = alloc.allocate(128, 256);
-	BOOST_CHECK(a0);
+	REQUIRE(a0);
 	allocator_2d::tag* a1 = alloc.allocate(128, 256);	
-	BOOST_CHECK(a1);
+	REQUIRE(a1);
 	allocator_2d::tag* a2 = alloc.allocate(128, 256);	
-	BOOST_CHECK(a2);
+	REQUIRE(a2);
 	allocator_2d::tag* a3 = alloc.allocate(300, 256); // force onto new vspan
-	BOOST_CHECK(a3);
+	REQUIRE(a3);
 	allocator_2d::tag* a4 = alloc.allocate(300, 256); // fail
-	BOOST_CHECK(!a4);
+	REQUIRE(!a4);
 	a4 = alloc.allocate(200, 300); // fail
-	BOOST_CHECK(!a4);
+	REQUIRE(!a4);
 	alloc.free(a2);
 	alloc.free(a1);
 	alloc.free(a0);
 	alloc.free(a3);	
 	// all space should be free here
 	a0 = alloc.allocate(512, 512);
-	BOOST_CHECK(a0);
+	REQUIRE(a0);
 	alloc.free(a0);
 	
 	// thrash test to check free coalescing. allocate n variable sized strings then free and check we can allocate a full size texture
@@ -189,12 +154,12 @@ BOOST_AUTO_TEST_CASE(test_allocator_2d)
 	tags.clear();
 	// all space should be free here
 	a0 = alloc.allocate(512, 512);
-	BOOST_CHECK(a0);
+	REQUIRE(a0);
 	alloc.free(a0);
 	
 }
 
-BOOST_AUTO_TEST_CASE(test_dl_allocator)
+TEST_CASE("test_dl_allocator", "")
 {
 	//=====================================================
 	// Doug Lea Allocator Tests
@@ -210,35 +175,35 @@ BOOST_AUTO_TEST_CASE(test_dl_allocator)
 	static const int szsmall = 50;
 	pre_summary = dlalloc.get_alloction_summary();
 	void* small = dlalloc.malloc(szsmall);
-	BOOST_CHECK(small);
+	REQUIRE(small);
 
 	// test size allocated is more than 50 (padding will vary depending footer and pointer size)
 	post_summary = dlalloc.get_alloction_summary();
-	BOOST_CHECK((post_summary.allocated - pre_summary.allocated) >= szsmall);
+	REQUIRE((post_summary.allocated - pre_summary.allocated) >= szsmall);
 
 	size_t sz = dlalloc.get_allocation_size(small);
 
 	// free
 	dlalloc.free(small);
 	post_summary = dlalloc.get_alloction_summary();
-	BOOST_CHECK(post_summary.allocated == pre_summary.allocated);
+	REQUIRE(post_summary.allocated == pre_summary.allocated);
 
 	// this should fail if we are only using MSPACES
 	// otherwise we have requested additional mem from the OS
 	void* big = dlalloc.malloc(1001);
 	if (dlalloc.can_grow())
 	{
-		BOOST_CHECK(big);
+		REQUIRE(big);
 		sz = dlalloc.get_allocation_size(big);
 	}
 	else
 	{
-		BOOST_CHECK(!big);
+		REQUIRE(!big);
 	}
 
 	// this should succeed, ie our address is on a 32 byte boundary
 	void* aligned32 = dlalloc.malloc_aligned(33, 32);
-	BOOST_CHECK(((std::ptrdiff_t)(aligned32) % 32) == 0);
+	REQUIRE(((std::ptrdiff_t)(aligned32) % 32) == 0);
 	sz = dlalloc.get_allocation_size(aligned32);
 	dlalloc.free(aligned32);
 
@@ -255,7 +220,7 @@ BOOST_AUTO_TEST_CASE(test_dl_allocator)
 	dlalloc.free(overrun);
 }
 
-BOOST_AUTO_TEST_CASE(test_debug_allocator)
+TEST_CASE("test_debug_allocator", "")
 {
 	//=====================================================
 	// Debug Allocator Tests
@@ -264,7 +229,7 @@ BOOST_AUTO_TEST_CASE(test_debug_allocator)
 
 	// check alignment working with debug allocator
 	void* debugaligned = allocator::malloc_aligned(33, 32);
-	BOOST_CHECK(((std::ptrdiff_t)(debugaligned) % 32) == 0);
+	REQUIRE(((std::ptrdiff_t)(debugaligned) % 32) == 0);
 	allocator::get_allocation_size(debugaligned);
 	allocator::free(debugaligned);
 }
