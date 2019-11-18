@@ -57,7 +57,10 @@ namespace core
 	
 	static void atexit_handler()
 	{
-		debug_alloc.print_allocated();		
+		if (debug_alloc.has_leaks()) 
+		{
+			debug_alloc.print_allocated();		
+		}
 	}
 
 	//------------------------------------------------------------------------------------

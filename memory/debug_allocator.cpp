@@ -317,7 +317,14 @@ namespace core
 
 	//------------------------------------------------------------------------------------
 
-	void debug_allocator::print_allocated()
+	bool debug_allocator::has_leaks() const
+	{
+		return !m_debug_info.empty();
+	}
+
+	//------------------------------------------------------------------------------------
+
+	void debug_allocator::print_allocated() const
 	{
 		const int BufLen = 256;
 		char buf[BufLen];

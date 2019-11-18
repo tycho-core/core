@@ -80,8 +80,11 @@ namespace core
 		bool check_consistency();
 					
 		/// print out all currently allocated memory 
-		void print_allocated();
-		
+		void print_allocated() const;
+
+		/// \returns True if there is leaked memory 
+		bool has_leaks() const;
+
 	private:
 		struct stats
 		{
