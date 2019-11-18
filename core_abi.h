@@ -29,14 +29,19 @@
 #endif 
 
 // DLL interface
-#ifdef TYCHO_CORE_EXPORTS
-#define CORE_ABI __declspec(dllexport)
-#define ZLIB_INTERNAL
-#define ZLIB_DLL
-
+#ifdef TYCHO_CORE_STATIC_LIB
+	#define CORE_ABI
 #else
-#define CORE_ABI __declspec(dllimport)
-#endif 
+	#ifdef TYCHO_CORE_EXPORTS
+	#define CORE_ABI __declspec(dllexport)
+	#define ZLIB_INTERNAL
+	#define ZLIB_DLL
+
+	#else
+	#define CORE_ABI __declspec(dllimport)
+	#endif 
+#endif
+
 
 // disable a few warnings globally. should move these into specific cpp's to avoid polluting
 // user header files
