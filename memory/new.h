@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////////////////////////
 #if _MSC_VER > 1000
 #pragma once
-#endif  // _MSC_VER
+#endif // _MSC_VER
 
 #ifndef __NEW_H_E1A8D455_3D03_44B6_B934_607713A2A795_
 #define __NEW_H_E1A8D455_3D03_44B6_B934_607713A2A795_
@@ -15,6 +15,7 @@
 //////////////////////////////////////////////////////////////////////////////
 #include "core/core_abi.h"
 #include "core/memory/allocator.h"
+#include "core/types.h"
 #include <new>
 
 #if 0
@@ -51,42 +52,28 @@ namespace tycho
 namespace core
 {
 
-	inline void* malloc(size_t size)
-	{
-		return allocator::malloc(static_cast<tycho::core::uint32>(size));
-	}	
+    inline void* malloc(size_t size)
+    {
+        return allocator::malloc(static_cast<tycho::core::uint32>(size));
+    }
 
-	inline void free(void* ptr)
-	{
-		return allocator::free(ptr);
-	}
-	
-	
-	/// Reallocate a previously allocated pointer.
-	/// \warning This is only valid if the original allocation used default alignment.
-	inline void* realloc(void* ptr, size_t size)
-	{
-		return allocator::realloc(ptr, size);
-	}
-	
-} // end namespace
-} // end namespace
+    inline void free(void* ptr) { return allocator::free(ptr); }
+
+    /// Reallocate a previously allocated pointer.
+    /// \warning This is only valid if the original allocation used default alignment.
+    inline void* realloc(void* ptr, size_t size) { return allocator::realloc(ptr, size); }
+
+} // namespace core
+} // namespace tycho
 
 #if TYCHO_GC
 // stl allocation function
-namespace std 
+namespace std
 {
-	inline void* __stl_new(size_t n) 
-	{
-		return tycho::core::allocator::malloc(n);
-	}
+inline void* __stl_new(size_t n) { return tycho::core::allocator::malloc(n); }
 
-	inline void __stl_delete(void* p) 
-	{
-		tycho::core::allocator::free(p);
-	} 
-} // end namespace
+inline void __stl_delete(void* p) { tycho::core::allocator::free(p); }
+} // namespace std
 #endif
-
 
 #endif // __NEW_H_E1A8D455_3D03_44B6_B934_607713A2A795_

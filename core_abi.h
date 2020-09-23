@@ -67,9 +67,9 @@
 #define TYCHO_NO_EXCEPTIONS 0
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus) && !defined(TYCHO_ESP32)
 #include "core/memory/new.h"
 #include "core/forward_decls.h"
-#endif 
+#endif
 
 #endif // __CORE_ABI_H_8B5DED01_1931_4953_9E06_58E760DF081B_
